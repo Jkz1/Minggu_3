@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Exercise 2</title>
+  </head>
+  <style>
+    table, th, td{
+      border: 1px red solid;
+    }
+    body{
+        background-color: rgb(0, 0, 0);
+        color: white;
+    }
+    a{
+      color: rgb(101, 207, 243);
+    }
+  </style>
+  <body>
+    <div>
+      <h1>Punny Web</h1>
+      <table id="dataTabel">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>City</th>
+        </tr>
+      </table>
+    </div>
+    <script>
+        let a = function(response){
+          data = JSON.parse(response);
+          var trHTML = "";
+          data.forEach(item => {
+            trHTML +=
+              "<tr><td><a href=http://"+item.website+" title = "+item.company.name+">"+item.id +
+              "</a></td><td>" +
+              item.name +
+              "</td><td>" +
+              item.username +
+              "</td></td>"+
+              "</td><td>"+
+              item.email +
+              "</td><td>" +
+              item.address.city +
+              "</td></tr>";
+          });
+          let dat = document.getElementById("dataTabel").innerHTML;
+          document.getElementById("dataTabel").innerHTML = dat+trHTML;
+        }
+        let load = function () {
+          let link = "https://jsonplaceholder.typicode.com/users";
+          let xhr;
+          xhr = new XMLHttpRequest();
+          try {
+            xhr = new XMLHttpRequest();
+            if (!xhr) return -1;
+            xhr.onreadystatechange = function () {
+              if (xhr.readyState === 4 && xhr.status === 200) {
+                a(xhr.responseText);
+              }
+            };
+            xhr.open("GET", link);
+            xhr.send();
+          }catch (e) {
+            console.log(e);
+          }
+        };
+        load();
+    </script>
+  </body>
+</html>
